@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+<!--    https://logback.qos.ch/manual/configuration.html#syntax-->
+<!--    <! - Specify the storage location for the log file. Do not use relative paths in LogBack configuration->-->
+<!--    <property name="LOG_HOME" value="/log" />-->
+
+<!--    <! - Console output->-->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+<!--            <! - Formatted output: %d means date, %thread means thread name, %-5level: level displays 5 characters from the left. %Msg: log message, %n - line break->-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+<!--&lt;!&ndash;    <! - generate log files every day->&ndash;&gt;-->
+<!--    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+<!--&lt;!&ndash;            <! - The file name of the output log file->&ndash;&gt;-->
+<!--            <FileNamePattern>${LOG_HOME}/TestWeb.log.%d{yyyy-MM-dd}.log</FileNamePattern>-->
+<!--&lt;!&ndash;            <! - Log file storage days->&ndash;&gt;-->
+<!--            <MaxHistory>30</MaxHistory>-->
+<!--        </rollingPolicy>-->
+<!--        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">-->
+<!--&lt;!&ndash;            <! - format output:% d mean date,% thread mean name current thread,% -5level: view 5 symbols left hand.% Msg: message magazine,% n - line break->&ndash;&gt;-->
+<!--            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>-->
+<!--        </encoder>-->
+<!--&lt;!&ndash;        <! - max size magazine logs->&ndash;&gt;-->
+<!--        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
+<!--            <MaxFileSize>100KB</MaxFileSize>-->
+<!--        </triggeringPolicy>-->
+<!--    </appender>-->
+
+<!--    <logger name="org.example.Logback" level="debug">-->
+<!--        <appender-ref ref="FILE" />-->
+<!--    </logger>-->
+
+
+<!--    <! - level output magazine->-->
+    <root level="info">
+        <appender-ref ref="STDOUT" />
+<!--        <appender-ref ref="FILE" />-->
+    </root>
+</configuration>
