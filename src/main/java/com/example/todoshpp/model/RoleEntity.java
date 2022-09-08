@@ -5,17 +5,17 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "j_role")
-public class Role {
+public class RoleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;
 
-    public static Role of(String name) {
-        Role role = new Role();
-        role.name = name;
-        return role;
+    public static RoleEntity of(String name) {
+        RoleEntity roleEntity = new RoleEntity();
+        roleEntity.name = name;
+        return roleEntity;
     }
 
     public int getId() {
@@ -42,8 +42,8 @@ public class Role {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Role role = (Role) o;
-        return id == role.id;
+        RoleEntity roleEntity = (RoleEntity) o;
+        return id == roleEntity.id;
     }
 
     @Override

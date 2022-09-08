@@ -1,4 +1,4 @@
-package com.example.bookjpa.configuration;
+package com.example.todoshpp.configuration;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

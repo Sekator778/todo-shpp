@@ -1,4 +1,4 @@
-package com.example.bookjpa.configuration;
+package com.example.todoshpp.configuration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

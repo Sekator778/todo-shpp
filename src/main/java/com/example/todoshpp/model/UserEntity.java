@@ -5,12 +5,11 @@ import java.util.Objects;
 
 /**
  * user-role contract many-to-one.
- * <p>
- * 
+ * A user can only have one role.
  */
 @Entity
 @Table(name = "j_user")
-public class User {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -19,13 +18,13 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "role_id")
-    private Role role;
+    private RoleEntity roleEntity;
 
-    public static User of(String name, Role role) {
-        User user = new User();
-        user.name = name;
-        user.role = role;
-        return user;
+    public static UserEntity of(String name, RoleEntity roleEntity) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.name = name;
+        userEntity.roleEntity = roleEntity;
+        return userEntity;
     }
 
     public int getId() {
@@ -44,12 +43,12 @@ public class User {
         this.name = name;
     }
 
-    public Role getRole() {
-        return role;
+    public RoleEntity getRole() {
+        return roleEntity;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRole(RoleEntity roleEntity) {
+        this.roleEntity = roleEntity;
     }
 
     @Override
@@ -60,8 +59,8 @@ public class User {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        User user = (User) o;
-        return id == user.id;
+        UserEntity userEntity = (UserEntity) o;
+        return id == userEntity.id;
     }
 
     @Override
@@ -71,6 +70,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", name='" + name + '\'' + ", role=" + role + '}';
+        return "User{" + "id=" + id + ", name='" + name + '\'' + ", role=" + roleEntity + '}';
     }
 }
