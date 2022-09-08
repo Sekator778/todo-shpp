@@ -1,4 +1,4 @@
-package com.example.todoshpp.model;
+package com.example.todoshpp.model.attribut;
 
 public enum Status {
     PLANNED,

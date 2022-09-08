@@ -1,5 +1,7 @@
 package com.example.todoshpp.model;
 
+import com.example.todoshpp.model.attribut.Role;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -9,14 +11,8 @@ public class RoleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    private String name;
-
-    public static RoleEntity of(String name) {
-        RoleEntity roleEntity = new RoleEntity();
-        roleEntity.name = name;
-        return roleEntity;
-    }
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     public int getId() {
         return id;
@@ -26,28 +22,29 @@ public class RoleEntity {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Role getRole() {
+        return role;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        RoleEntity roleEntity = (RoleEntity) o;
-        return id == roleEntity.id;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RoleEntity that = (RoleEntity) o;
+
+        if (id != that.id) return false;
+        return role == that.role;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        int result = id;
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        return result;
     }
 }

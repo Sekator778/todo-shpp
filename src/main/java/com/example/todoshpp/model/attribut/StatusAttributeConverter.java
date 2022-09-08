@@ -1,7 +1,5 @@
 package com.example.todoshpp.model.attribut;
 
-import com.example.todoshpp.model.Status;
-
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 

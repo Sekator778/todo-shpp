@@ -1,16 +1,19 @@
 package com.example.todoshpp.model;
 
 
+import com.example.todoshpp.model.attribut.Status;
 import com.example.todoshpp.model.attribut.StatusAttributeConverter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * data model
  */
 @Entity
-@Table(name = "items")
+@Table(name = "taks")
 public class TaskEntity {
     /**
      * identity task
@@ -29,7 +32,7 @@ public class TaskEntity {
      * date created task
      */
     @Column(name = "created")
-    private LocalDate date;
+    private LocalDateTime date;
 
     /**
      * done - if выполнена, undone - else нет
@@ -46,6 +49,11 @@ public class TaskEntity {
      * constructor for JPA
      */
     public TaskEntity() {
+    }
+
+    @PrePersist
+    void createdAt() {
+        this.date = LocalDateTime.now();
     }
 
     @Override
@@ -88,13 +96,7 @@ public class TaskEntity {
         this.description = description;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
 
     public String getDone() {
         return done;
