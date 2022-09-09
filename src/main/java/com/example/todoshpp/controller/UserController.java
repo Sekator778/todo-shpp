@@ -1,6 +1,8 @@
 package com.example.todoshpp.controller;
 
+import com.example.todoshpp.model.RoleEntity;
 import com.example.todoshpp.model.UserEntity;
+import com.example.todoshpp.service.RoleService;
 import com.example.todoshpp.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -16,9 +18,12 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * for swagger use -<a href="http://localhost:port/swagger-ui/index.html">...</a>
@@ -27,11 +32,13 @@ import java.util.Map;
 @RequestMapping("/api")
 public class UserController {
     private final Logger log = LoggerFactory.getLogger(UserController.class);
-    private final UserService service;
+    private final UserService userService;
+    private final RoleService roleService;
 
     @Autowired
-    public UserController(UserService service) {
-        this.service = service;
+    public UserController(UserService userService, RoleService roleService) {
+        this.userService = userService;
+        this.roleService = roleService;
         log.info("book service was be autowired");
     }
 
@@ -39,38 +46,39 @@ public class UserController {
     @Operation(summary = "GET request")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "All good done", content = {@Content(examples = {@ExampleObject(value = "Book", summary = "subject #1")})})})
     @GetMapping("/user")
-    public ResponseEntity<Iterable<UserEntity>> getBooks() {
+    public ResponseEntity<Iterable<UserEntity>> getAllUsers() {
         log.info("used get mapping to /user");
-        return ResponseEntity.ok(service.findAll());
+        return ResponseEntity.ok(userService.findAll());
     }
 
-//    @GetMapping("/book/{id}")
-//    public ResponseEntity<BookEntity> getBookById(@PathVariable int id) {
-//        log.info("method get book by id used");
-//        Optional<BookEntity> book = service.findById(id);
-//        return book.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-//    }
-//
-//    @PatchMapping("/book/{id}")
-//    public ResponseEntity<BookEntity> setCompleted(@PathVariable int id) {
-//        log.info("method set or update book by id used");
-//        Optional<BookEntity> book = service.findById(id);
-//        if (book.isEmpty()) {
-//            log.warn("{} - its incorrect id check input", id);
-//            return ResponseEntity.notFound().build();
-//        }
-//        BookEntity result = book.get();
-//        result.setCompleted(true);
-//        service.save(result);
-//        URI location = ServletUriComponentsBuilder
-//                .fromCurrentRequest()
-//                .buildAndExpand(result.getId())
-//                .toUri();
-//        log.info("method set or update book done");
-//        return ResponseEntity.ok().header(
-//                "Location", location.toString()
-//        ).build();
-//    }
+    @GetMapping("/user/{id}")
+    public ResponseEntity<UserEntity> getBookById(@PathVariable int id) {
+        log.info("method get book by id used");
+        Optional<UserEntity> book = userService.findById(id);
+        return book.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PatchMapping("/user/{id},{roleName}")
+    public ResponseEntity<UserEntity> setCompleted(@PathVariable int id, @PathVariable String roleName) {
+        log.info("method set or update user by id used");
+        Optional<UserEntity> user = userService.findById(id);
+        if (user.isEmpty()) {
+            log.warn("{} - its incorrect id check input", id);
+            return ResponseEntity.notFound().build();
+        }
+        UserEntity result = user.get();
+        RoleEntity idRole = roleService.findIdRole(roleName);
+        result.setRole(idRole);
+        userService.save(result);
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .buildAndExpand(result.getId())
+                .toUri();
+        log.info("method set or update user done");
+        return ResponseEntity.ok().header(
+                "Location", location.toString()
+        ).build();
+    }
 
     //    @RequestMapping(value = "/book", method = {RequestMethod.POST, RequestMethod.PUT})
 //    public ResponseEntity<?> createBook(@Valid @RequestBody BookEntity bookEntity, Errors errors) {
@@ -94,7 +102,7 @@ public class UserController {
     public ResponseEntity<?> saveUser(@Validated @RequestBody UserEntity userEntity) {
         log.info("used get mapping to /user method addUser");
 
-        return service.save(userEntity);
+        return userService.save(userEntity);
     }
 
 //    @DeleteMapping("/book/{id}")

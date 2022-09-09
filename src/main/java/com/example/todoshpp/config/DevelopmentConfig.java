@@ -17,16 +17,16 @@ public class DevelopmentConfig {
     @Bean
     public CommandLineRunner dataLoader(UserRepository userRepository, RoleRepository roleRepository) { // user userRepository for ease of testing with a built-in user
         Logger log = LoggerFactory.getLogger(CommandLineRunner.class);
-        return new CommandLineRunner() {
-            @Override
-            public void run(String... args) throws Exception {
-                RoleEntity role_admin = new RoleEntity();
-                role_admin.setRole(Role.ADMIN);
-                roleRepository.save(role_admin);
-                UserEntity admin = UserEntity.of("admin", role_admin);
-                userRepository.save(admin);
-                log.info("#####  database for test initialize ######");
-            }
+        return args -> {
+            RoleEntity role_admin = new RoleEntity();
+            role_admin.setRole(Role.ADMIN);
+            RoleEntity role_user = new RoleEntity();
+            role_user.setRole(Role.USER);
+            roleRepository.save(role_admin);
+            roleRepository.save(role_user);
+            UserEntity admin = UserEntity.of("admin", role_admin);
+            userRepository.save(admin);
+            log.info("#####  database for test initialize ######");
         };
     }
 

@@ -5,9 +5,7 @@ import com.example.todoshpp.model.attribut.Status;
 import com.example.todoshpp.model.attribut.StatusAttributeConverter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * data model

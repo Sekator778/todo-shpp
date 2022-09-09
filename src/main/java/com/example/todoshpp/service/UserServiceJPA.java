@@ -13,6 +13,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 import java.net.URI;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -22,7 +23,7 @@ import java.util.Set;
 public class UserServiceJPA implements UserService {
     private final UserRepository repository;
 
-    private final Logger LOG = LoggerFactory.getLogger(UserServiceJPA.class);
+    private final Logger log = LoggerFactory.getLogger(UserServiceJPA.class);
     @Autowired
     private Validator validator;
 
@@ -44,17 +45,23 @@ public class UserServiceJPA implements UserService {
             for (ConstraintViolation<UserEntity> constraintViolation : violations) {
                 stringBuilder.append(constraintViolation.getMessage());
             }
-            LOG.info("the model was not inserted into the database because it did not pass validation");
+            log.info("the model was not inserted into the database because it did not pass validation");
             throw new ConstraintViolationException("Error occurred: " + stringBuilder, violations);
         }
-        LOG.info("model save to DB with id {}", userEntity.getId());
+        log.info("model save to DB with id {}", userEntity.getId());
         UserEntity result = repository.save(userEntity);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(result.getId())
                 .toUri();
-        LOG.info("success created book");
+        log.info("success created model");
         return ResponseEntity.created(location)
                 .build();
+    }
+
+    @Override
+    public Optional<UserEntity> findById(int id) {
+        log.info("find by id method UserService");
+        return repository.findById(id);
     }
 }
