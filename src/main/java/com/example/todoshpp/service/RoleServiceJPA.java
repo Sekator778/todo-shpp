@@ -2,7 +2,6 @@ package com.example.todoshpp.service;
 
 import com.example.todoshpp.model.RoleEntity;
 import com.example.todoshpp.repository.RoleRepository;
-import com.example.todoshpp.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

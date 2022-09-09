@@ -1,15 +1,15 @@
-package com.example.todoshpp.service;
-
-import com.example.todoshpp.model.UserEntity;
-import org.springframework.http.ResponseEntity;
-
-import java.util.Optional;
-
-public interface UserService {
-
-    Iterable<UserEntity> findAll();
-
-    ResponseEntity<?> save(UserEntity userEntity);
-
-    Optional<UserEntity> findById(int id);
-}
+//package com.example.todoshpp.service;
+//
+//import com.example.todoshpp.model.PersonEntity;
+//import org.springframework.http.ResponseEntity;
+//
+//import java.util.Optional;
+//
+//public interface UserService {
+//
+//    Iterable<PersonEntity> findAll();
+//
+//    ResponseEntity<?> save(PersonEntity personEntity);
+//
+//    Optional<PersonEntity> findById(int id);
+//}
