@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -61,7 +62,7 @@ public class TaskController {
         log.info("patch started");
         return service.patch(update, id);
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/tasks/{id}")
     void deleteTaskEntity(@PathVariable Integer id) {
         log.info("task with id - {} was delete", id);
