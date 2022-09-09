@@ -12,16 +12,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class DirectoryUserDetailsService implements UserDetailsService {
 
-    private final PersonRepository repo;
+    private final PersonRepository repository;
 
-    public DirectoryUserDetailsService(PersonRepository repo) {
-        this.repo = repo;
+    public DirectoryUserDetailsService(PersonRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
-            final Person person = this.repo.findByEmailIgnoreCase(username);
+            final Person person = this.repository.findByEmailIgnoreCase(username);
 
             if (person != null) {
                 PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
