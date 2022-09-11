@@ -60,6 +60,12 @@ public class TaskEntity {
         log.info("task entity create constructor");
     }
 
+    public TaskEntity(int id, String description, Status status) {
+        this.id = id;
+        this.description = description;
+        this.status = status;
+    }
+
     @PrePersist
     void createdAt() {
         this.date = LocalDateTime.now();

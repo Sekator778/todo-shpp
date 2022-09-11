@@ -66,6 +66,7 @@ public class TaskServiceJPA implements TaskService {
                     x.setDescription(newTaskEntity.getDescription());
                     x.setStatus(newTaskEntity.getStatus());
                     x.setDone(newTaskEntity.getDone());
+                    x.setModify(LocalDateTime.now());
                     return repository.save(x);
                 })
                 .orElseGet(() -> {
@@ -77,25 +78,31 @@ public class TaskServiceJPA implements TaskService {
     // update status only
     @Override
     public TaskEntity patch(Status newStatus, Integer id) {
+        TaskEntity result = null;
         StatusAttributeConverter converter = new StatusAttributeConverter();
         Integer idNewStatus = converter.convertToDatabaseColumn(newStatus);
         log.info("patch started into service");
         Optional<TaskEntity> byId = repository.findById(id);
-        Status status1 = byId.get().getStatus();
+        if (byId.isPresent()) {
+            result = byId.get();
+        }
+        assert result != null;
+        Status status1 = result.getStatus();
         Integer idOldStatus = converter.convertToDatabaseColumn(status1);
-        log.info("====================== old {}", idOldStatus);
-        log.info("====================== new {}", idNewStatus);
         if (newStatus.equals(Status.CANCELLED)) {
             log.info("cansel tasks");
-            byId.get().setStatus(Status.CANCELLED);
+            result.setStatus(Status.CANCELLED);
+            result.setModify(LocalDateTime.now());
         } else if (idNewStatus <= idOldStatus || idOldStatus == 4) {
             log.info("wrong status or task cancelled");
         } else {
             log.info("status was update");
-            byId.get().setStatus(newStatus);
+            result.setStatus(newStatus);
+            result.setModify(LocalDateTime.now());
         }
-        repository.save(byId.get());
-        return byId.get();
+        repository.save(result);
+        log.info("patch used successful");
+        return result;
     }
 
     public void deleteTaskEntity(@PathVariable Integer id) {
