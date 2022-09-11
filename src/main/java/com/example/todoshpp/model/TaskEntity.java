@@ -3,13 +3,18 @@ package com.example.todoshpp.model;
 
 import com.example.todoshpp.model.attribut.Status;
 import com.example.todoshpp.model.attribut.StatusAttributeConverter;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 /**
  * data model
  */
+@Slf4j
 @Entity
 @Table(name = "tasks")
 public class TaskEntity {
@@ -24,6 +29,9 @@ public class TaskEntity {
      * description current task
      */
     @Column(name = "description")
+    @NotNull
+    @NotBlank(message = "{description.text}")
+    @Size(min = 3, max = 60, message = "{desc-length.text}")
     private String description;
 
     /**
@@ -47,6 +55,7 @@ public class TaskEntity {
      * constructor for JPA
      */
     public TaskEntity() {
+        log.info("task entity create constructor");
     }
 
     @PrePersist
@@ -62,7 +71,8 @@ public class TaskEntity {
         TaskEntity taskEntity = (TaskEntity) o;
 
         if (id != taskEntity.id) return false;
-        if (description != null ? !description.equals(taskEntity.description) : taskEntity.description != null) return false;
+        if (description != null ? !description.equals(taskEntity.description) : taskEntity.description != null)
+            return false;
         if (date != null ? !date.equals(taskEntity.date) : taskEntity.date != null) return false;
         if (done != null ? !done.equals(taskEntity.done) : taskEntity.done != null) return false;
         return status == taskEntity.status;
@@ -93,7 +103,6 @@ public class TaskEntity {
     public void setDescription(String description) {
         this.description = description;
     }
-
 
 
     public String getDone() {

@@ -1,19 +1,17 @@
-//package com.example.todoshpp.config;
-//
-//import com.example.todoshpp.model.Person;
-//import com.example.todoshpp.repository.PersonRepository;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
-//import org.springframework.boot.CommandLineRunner;
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//
-//import java.time.LocalDate;
-//import java.time.LocalDateTime;
-//
-//@Configuration
-//public class DevelopmentConfig {
-//
+package com.example.todoshpp.config;
+
+import com.example.todoshpp.model.TaskEntity;
+import com.example.todoshpp.model.attribut.Status;
+import com.example.todoshpp.service.TaskServiceJPA;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@Slf4j
+public class DevelopmentConfig {
+
 //    @Bean
 //    public CommandLineRunner dataLoader(PersonRepository personRepository) { // user personRepository for ease of testing with a built-in user
 //        Logger log = LoggerFactory.getLogger(CommandLineRunner.class);
@@ -34,5 +32,24 @@
 //            log.info("#####  database for test initialize ######");
 //        };
 //    }
-//
-//}
+
+    @Bean
+    public CommandLineRunner tasksLoader(TaskServiceJPA taskServiceJPA) {
+        return args -> {
+            if (taskServiceJPA.findOne(1).isEmpty()) {
+                TaskEntity taskOne = new TaskEntity();
+                taskOne.setDescription("learn Java every day");
+                TaskEntity taskTwo = new TaskEntity();
+                taskTwo.setDescription("learn English every day");
+                taskOne.setStatus(Status.PLANNED);
+                taskOne.setDone("undone");
+                taskTwo.setStatus(Status.PLANNED);
+                taskTwo.setDone("undone");
+                log.info("load default tasks");
+                taskServiceJPA.save(taskOne);
+                taskServiceJPA.save(taskTwo);
+            }
+        };
+    }
+
+}
