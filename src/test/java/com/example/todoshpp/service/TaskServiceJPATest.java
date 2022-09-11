@@ -3,6 +3,7 @@ package com.example.todoshpp.service;
 import com.example.todoshpp.controller.TaskController;
 import com.example.todoshpp.model.TaskEntity;
 import com.example.todoshpp.model.attribut.Status;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.core.Is;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,6 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(TaskController.class)
-@ExtendWith(MockitoExtension.class)
 class TaskServiceJPATest {
     @MockBean
     private TaskServiceJPA service;
@@ -71,6 +71,7 @@ class TaskServiceJPATest {
     @Test
     void findOne() throws Exception {
         when(service.findOne(1)).thenReturn(Optional.of(task1));
+
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/tasks/1")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -97,16 +98,23 @@ class TaskServiceJPATest {
                         .contentType(MediaType.APPLICATION_JSON));
     }
 
+    // TODO fix its
     @Test
-    void patch() {
-        when(service.findOne(1)).thenReturn(Optional.of(task1));
-        assertEquals(service.findOne(1).get().getStatus(),
-                Status.PLANNED);
-        TaskEntity patch = service.patch(Status.WORK_IN_PROGRESS, 1);
-        System.out.println("=========== " + patch);
-        assertEquals(patch.getStatus(), Status.WORK_IN_PROGRESS);
-//        assertEquals(service.findOne(1).get().getStatus(),
-  //              Status.WORK_IN_PROGRESS);
+    void patch() throws Exception {
+//        when(service.findOne(1)).thenReturn(Optional.of(task1));
+
+//        assertEquals(service.findOne(1).get().getStatus(),                Status.PLANNED);
+        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.patch("/api/tasks/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(this.mapper.writeValueAsString(Status.WORK_IN_PROGRESS));
+//                .content(this.mapper.writeValueAsString("1"));
+
+        mockMvc.perform(mockRequest)
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.description", Is.is("Length between 3 - 30")))
+                .andExpect(MockMvcResultMatchers.content()
+                        .contentType(MediaType.APPLICATION_JSON));
     }
 
 

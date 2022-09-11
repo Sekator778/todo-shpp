@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -66,8 +67,9 @@ public class TaskController {
 
     // update status only
     @PatchMapping("/{id}")
-    TaskEntity patch(@Validated @RequestBody Status update, @PathVariable Integer id) {
+    TaskEntity patch(@Validated @RequestBody Status update, BindingResult result, @PathVariable Integer id) {
         log.info("patch started");
+        result.getAllErrors();
         return service.patch(update, id);
     }
 

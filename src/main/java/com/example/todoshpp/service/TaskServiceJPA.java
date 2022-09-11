@@ -100,9 +100,9 @@ public class TaskServiceJPA implements TaskService {
             result.setStatus(newStatus);
             result.setModify(LocalDateTime.now());
         }
-        repository.save(result);
+        TaskEntity save = repository.save(result);
         log.info("patch used successful");
-        return result;
+        return save;
     }
 
     public void deleteTaskEntity(@PathVariable Integer id) {
