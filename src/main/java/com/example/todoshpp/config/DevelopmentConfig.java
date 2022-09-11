@@ -2,6 +2,7 @@ package com.example.todoshpp.config;
 
 import com.example.todoshpp.model.TaskEntity;
 import com.example.todoshpp.model.attribut.Status;
+import com.example.todoshpp.repository.TaskRepository;
 import com.example.todoshpp.service.TaskServiceJPA;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -34,9 +35,9 @@ public class DevelopmentConfig {
 //    }
 
     @Bean
-    public CommandLineRunner tasksLoader(TaskServiceJPA taskServiceJPA) {
+    public CommandLineRunner tasksLoader(TaskRepository repository) {
         return args -> {
-            if (taskServiceJPA.findOne(1).isEmpty()) {
+            if (repository.findById(1).isEmpty()) {
                 TaskEntity taskOne = new TaskEntity();
                 taskOne.setDescription("learn Java every day");
                 TaskEntity taskTwo = new TaskEntity();
@@ -46,8 +47,8 @@ public class DevelopmentConfig {
                 taskTwo.setStatus(Status.PLANNED);
                 taskTwo.setDone("undone");
                 log.info("load default tasks");
-                taskServiceJPA.save(taskOne);
-                taskServiceJPA.save(taskTwo);
+                repository.save(taskOne);
+                repository.save(taskTwo);
             }
         };
     }

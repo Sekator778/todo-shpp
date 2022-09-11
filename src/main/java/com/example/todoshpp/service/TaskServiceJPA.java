@@ -15,6 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,6 +48,7 @@ public class TaskServiceJPA implements TaskService {
 
     // Save
     public ResponseEntity<TaskEntity> save(@Valid @RequestBody TaskEntity newTaskEntity) {
+        newTaskEntity.setModify(LocalDateTime.now());
         TaskEntity save = repository.save(newTaskEntity);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
