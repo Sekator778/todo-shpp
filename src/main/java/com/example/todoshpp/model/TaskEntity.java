@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  * data model
  */
 @Entity
-@Table(name = "taks")
+@Table(name = "tasks")
 public class TaskEntity {
     /**
      * identity task

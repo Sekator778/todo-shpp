@@ -25,12 +25,12 @@ public class User implements UserDetails {
     private Long id;
 
     private final String username;
-    private final String password;
+    private  String password;
     private final String fullName;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+        return Collections.singletonList(new SimpleGrantedAuthority("USER"));
     }
 
     @Override
@@ -53,4 +53,7 @@ public class User implements UserDetails {
         return true;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
