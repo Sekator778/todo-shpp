@@ -23,13 +23,13 @@ import java.util.Optional;
  *
  */
 @Service
-public class TaskServiceImpl implements TaskService {
+public class TaskServiceJPA implements TaskService {
     private final TaskRepository repository;
 
-    private final Logger log = LoggerFactory.getLogger(TaskServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(TaskServiceJPA.class);
 
     @Autowired
-    public TaskServiceImpl(TaskRepository repository) {
+    public TaskServiceJPA(TaskRepository repository) {
         this.repository = repository;
     }
 
@@ -101,8 +101,9 @@ public class TaskServiceImpl implements TaskService {
             result.setModify(LocalDateTime.now());
         }
         TaskEntity save = repository.save(result);
+       // System.out.println(repository.findById(1).get()); // TODO what the ....
         log.info("patch used successful");
-        return save;
+        return result;
     }
 
     public void deleteTaskEntity(@PathVariable Integer id) {

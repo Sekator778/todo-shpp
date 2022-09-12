@@ -27,9 +27,9 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(TaskController.class)
-class TaskServiceImplTest {
+class TaskServiceJPATest {
     @MockBean
-    private TaskServiceImpl service;
+    private TaskServiceJPA service;
     TaskEntity task1 = new TaskEntity(1, "desc1", Status.PLANNED);
     TaskEntity task2 = new TaskEntity(2, "desc2", Status.PLANNED);
 

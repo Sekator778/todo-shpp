@@ -70,6 +70,7 @@ public class TaskController {
     TaskEntity patch(@Validated @RequestBody Status update, BindingResult result, @PathVariable Integer id) {
         log.info("patch started");
         result.getAllErrors();
+        System.out.println("=================== " + result.getAllErrors().get(0).toString()); // TODO fix me when status wrong
         return service.patch(update, id);
     }
 
