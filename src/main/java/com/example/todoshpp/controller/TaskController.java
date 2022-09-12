@@ -12,12 +12,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Min;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -67,11 +69,21 @@ public class TaskController {
 
     // update status only
     @PatchMapping("/{id}")
-    TaskEntity patch(@Validated @RequestBody Status update, BindingResult result, @PathVariable Integer id) {
+    public ResponseEntity<TaskEntity> patch(@Validated @RequestBody Status update, BindingResult result, @PathVariable Integer id) {
         log.info("patch started");
-        result.getAllErrors();
-        System.out.println("=================== " + result.getAllErrors().get(0).toString()); // TODO fix me when status wrong
-        return service.patch(update, id);
+        List<ObjectError> allErrors = result.getAllErrors();
+        if (result.hasErrors()) {
+            log.error("method patch validate error");
+            result.getAllErrors()
+                    .forEach(objectError -> {
+                        log.error("error name {}", ((FieldError) objectError).getField());
+                        log.error("error message {}", objectError.getDefaultMessage());
+                    });
+            return ResponseEntity.badRequest().build();
+        } else {
+            log.info("patch success");
+            return ResponseEntity.ok().body(service.patch(update, id));
+        }
     }
 
     //    @PreAuthorize("hasRole('ADMIN')")
