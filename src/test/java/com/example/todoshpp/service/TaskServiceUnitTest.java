@@ -19,7 +19,7 @@ public class TaskServiceUnitTest {
     @Mock
     private TaskRepository repository;
     @InjectMocks
-    TaskServiceJPA service;
+    TaskServiceImpl service;
 
     TaskEntity task1 = new TaskEntity(1, "desc1", Status.PLANNED);
 

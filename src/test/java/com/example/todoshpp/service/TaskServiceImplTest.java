@@ -3,13 +3,10 @@ package com.example.todoshpp.service;
 import com.example.todoshpp.controller.TaskController;
 import com.example.todoshpp.model.TaskEntity;
 import com.example.todoshpp.model.attribut.Status;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.core.Is;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -30,9 +27,9 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(TaskController.class)
-class TaskServiceJPATest {
+class TaskServiceImplTest {
     @MockBean
-    private TaskServiceJPA service;
+    private TaskServiceImpl service;
     TaskEntity task1 = new TaskEntity(1, "desc1", Status.PLANNED);
     TaskEntity task2 = new TaskEntity(2, "desc2", Status.PLANNED);
 

@@ -23,13 +23,13 @@ import java.util.Optional;
  *
  */
 @Service
-public class TaskServiceJPA implements TaskService {
+public class TaskServiceImpl implements TaskService {
     private final TaskRepository repository;
 
-    private final Logger log = LoggerFactory.getLogger(TaskServiceJPA.class);
+    private final Logger log = LoggerFactory.getLogger(TaskServiceImpl.class);
 
     @Autowired
-    public TaskServiceJPA(TaskRepository repository) {
+    public TaskServiceImpl(TaskRepository repository) {
         this.repository = repository;
     }
 
