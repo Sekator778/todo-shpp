@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(TaskController.class)
-class TaskServiceJPATest {
+class TaskServiceJPAIntegrationTest {
     @MockBean
     private TaskServiceJPA service;
     TaskEntity task1 = new TaskEntity(1, "desc1", Status.PLANNED);
@@ -37,6 +37,18 @@ class TaskServiceJPATest {
     MockMvc mockMvc;
     @Autowired
     ObjectMapper mapper;
+
+    @Test
+    void whenFindOneWithoutAuthorizationThenUnauthorized() throws Exception {
+        when(service.findOne(1)).thenReturn(Optional.of(task1));
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/tasks/1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNonAuthoritativeInformation())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", notNullValue()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.description", Is.is("desc1")));
+    }
 
     @Test
     public void createRecord_success() throws Exception {
