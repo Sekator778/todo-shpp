@@ -77,16 +77,15 @@ public class TaskServiceJPA implements TaskService {
 
     // update status only
     @Override
-    public TaskEntity patch(Status newStatus, Integer id) {
+    public TaskEntity patch(Status newStatus, Integer taskId) {
         TaskEntity result = null;
         StatusAttributeConverter converter = new StatusAttributeConverter();
         Integer idNewStatus = converter.convertToDatabaseColumn(newStatus);
         log.info("patch started into service");
-        Optional<TaskEntity> byId = repository.findById(id);
+        Optional<TaskEntity> byId = repository.findById(taskId);
         if (byId.isPresent()) {
             result = byId.get();
         }
-        assert result != null;
         Status status1 = result.getStatus();
         Integer idOldStatus = converter.convertToDatabaseColumn(status1);
         if (newStatus.equals(Status.CANCELLED)) {
