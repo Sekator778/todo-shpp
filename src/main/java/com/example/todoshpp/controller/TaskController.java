@@ -71,7 +71,6 @@ public class TaskController {
     @PatchMapping("/{id}")
     public ResponseEntity<TaskEntity> patch(@Validated @RequestBody Status update, BindingResult result, @PathVariable Integer id) {
         log.info("patch started");
-        List<ObjectError> allErrors = result.getAllErrors();
         if (result.hasErrors()) {
             log.error("method patch validate error");
             result.getAllErrors()

@@ -1,6 +1,5 @@
 package com.example.todoshpp.model;
 
-
 import com.example.todoshpp.model.attribut.Status;
 import com.example.todoshpp.model.attribut.StatusAttributeConverter;
 import lombok.extern.slf4j.Slf4j;
