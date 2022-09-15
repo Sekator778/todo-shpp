@@ -9,9 +9,9 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 
 @SpringBootApplication
-@PropertySources({
-        @PropertySource(value = "file:/app.properties", ignoreResourceNotFound = true)
-})
+//@PropertySources({
+//        @PropertySource(value = "file:/app.properties", ignoreResourceNotFound = true)
+//})
 @RequiredArgsConstructor
 public class TodoShppApplication {
     private static final Logger log = LoggerFactory.getLogger(TodoShppApplication.class);

@@ -4,5 +4,5 @@ public enum Status {
     PLANNED,
     WORK_IN_PROGRESS,
     DONE,
-    CANCELLED;
+    CANCELLED
 }

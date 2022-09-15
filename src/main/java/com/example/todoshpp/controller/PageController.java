@@ -8,14 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class PageController {
-    @Operation(summary = "international get request")
+    @Operation(summary = "home page")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "All good done")})
-    @GetMapping("/international")
-    public String getInternationalPage() {
-        return "international";
-    }
-
-    @Operation(summary = "international get request on address home")
     @GetMapping("/")
     public String home() {
         return "home";

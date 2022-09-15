@@ -2,20 +2,22 @@ package com.example.todoshpp.service;
 
 import com.example.todoshpp.model.TaskEntity;
 import com.example.todoshpp.model.attribut.Status;
+import com.example.todoshpp.model.attribut.StatusAttributeConverter;
 import com.example.todoshpp.repository.TaskRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import org.webjars.NotFoundException;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 /**
  *
@@ -37,17 +39,23 @@ public class TaskServiceJPA implements TaskService {
         return repository.findAll();
     }
 
-    // Save
-    public TaskEntity newTaskEntity(@Valid @RequestBody TaskEntity newTaskEntity) {
-        log.info("new TaskEntity was created and saved ");
-        return repository.save(newTaskEntity);
+    // Find by id
+
+    public Optional<TaskEntity> findOne(@PathVariable @Min(1) Integer id) {
+        log.info("task findOne used");
+        return repository.findById(id);
     }
 
-    // Find
-    public TaskEntity findOne(@PathVariable @Min(1) Integer id) {
-        log.info("task findOne used");
-        return repository.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.valueOf(id)));
+    // Save
+    public ResponseEntity<TaskEntity> save(@Valid @RequestBody TaskEntity newTaskEntity) {
+        newTaskEntity.setModify(LocalDateTime.now());
+        TaskEntity save = repository.save(newTaskEntity);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(save.getId())
+                .toUri();
+        log.info("new TaskEntity was created and saved ");
+        return ResponseEntity.created(location).build();
     }
 
     // Save or update
@@ -58,6 +66,7 @@ public class TaskServiceJPA implements TaskService {
                     x.setDescription(newTaskEntity.getDescription());
                     x.setStatus(newTaskEntity.getStatus());
                     x.setDone(newTaskEntity.getDone());
+                    x.setModify(LocalDateTime.now());
                     return repository.save(x);
                 })
                 .orElseGet(() -> {
@@ -67,21 +76,32 @@ public class TaskServiceJPA implements TaskService {
     }
 
     // update status only
-    public TaskEntity patch(@RequestBody Map<String, String> update, @PathVariable Integer id) {
-        log.info("patch started");
-        return repository.findById(id)
-                .map(x -> {
-// TODO  fix status logic
-                    String status = update.get("status");
-                    if (!StringUtils.isEmpty(status)) {
-                        x.setStatus(Status.PLANNED);
-                        // better create a custom method to update a value = :newValue where id = :id
-                        return repository.save(x);
-                    } else {
-                        throw new NotFoundException(String.valueOf(update.keySet()));
-                    }
-                })
-                .orElseThrow(() -> new NotFoundException(String.valueOf(id)));
+    @Override
+    public TaskEntity patch(Status newStatus, Integer taskId) {
+        TaskEntity result = null;
+        StatusAttributeConverter converter = new StatusAttributeConverter();
+        Integer idNewStatus = converter.convertToDatabaseColumn(newStatus);
+        log.info("patch started into service");
+        Optional<TaskEntity> byId = repository.findById(taskId);
+        if (byId.isPresent()) {
+            result = byId.get();
+        }
+        Status status1 = result.getStatus();
+        Integer idOldStatus = converter.convertToDatabaseColumn(status1);
+        if (newStatus.equals(Status.CANCELLED)) {
+            log.info("cansel tasks");
+            result.setStatus(Status.CANCELLED);
+            result.setModify(LocalDateTime.now());
+        } else if (idNewStatus <= idOldStatus || idOldStatus == 4) {
+            log.info("wrong status or task cancelled");
+        } else {
+            log.info("status was update");
+            result.setStatus(newStatus);
+            result.setModify(LocalDateTime.now());
+        }
+        TaskEntity save = repository.save(result);
+        log.info("patch used successful");
+        return save;
     }
 
     public void deleteTaskEntity(@PathVariable Integer id) {
