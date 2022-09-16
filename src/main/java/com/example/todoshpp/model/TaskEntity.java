@@ -2,7 +2,8 @@ package com.example.todoshpp.model;
 
 import com.example.todoshpp.model.attribut.Status;
 import com.example.todoshpp.model.attribut.StatusAttributeConverter;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -13,10 +14,10 @@ import java.time.LocalDateTime;
 /**
  * data model
  */
-@Slf4j
 @Entity
 @Table(name = "tasks")
 public class TaskEntity {
+    private final static Logger log = LoggerFactory.getLogger(TaskEntity.class);
     /**
      * identity task
      */

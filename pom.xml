@@ -36,18 +36,6 @@
                 <artifactId>spring-boot-starter-thymeleaf</artifactId>
                 <version>2.7.3</version>
             </dependency>
-
-
-<!--            <dependency>-->
-<!--                <groupId>com.h2database</groupId>-->
-<!--                <artifactId>h2</artifactId>-->
-<!--                <scope>runtime</scope>-->
-<!--            </dependency>-->
-            <dependency>
-                <groupId>org.postgresql</groupId>
-                <artifactId>postgresql</artifactId>
-                <scope>runtime</scope>
-            </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
@@ -73,24 +61,16 @@
                 <artifactId>springdoc-openapi-ui</artifactId>
                 <version>1.6.11</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator -->
-<!--            <dependency>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-starter-actuator</artifactId>-->
-<!--                <version>2.7.3</version>-->
-<!--            </dependency>-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-actuator</artifactId>
+                <version>2.7.3</version>
+            </dependency>
             <dependency>
                 <groupId>org.mariadb.jdbc</groupId>
                 <artifactId>mariadb-java-client</artifactId>
                 <version>3.0.6</version>
             </dependency>
-            <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver &ndash;&gt;-->
-            <!--        <dependency>-->
-            <!--            <groupId>org.mongodb</groupId>-->
-            <!--            <artifactId>mongo-java-driver</artifactId>-->
-            <!--            <version>3.12.11</version>-->
-            <!--        </dependency>-->
-
             <!-- https://mvnrepository.com/artifact/org.assertj/assertj-core -->
             <dependency>
                 <groupId>org.assertj</groupId>
@@ -102,7 +82,7 @@
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
-                <version>4.7.0</version>
+                <version>4.8.0</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
@@ -122,6 +102,14 @@
                 <version>5.7.3</version>
                 <scope>test</scope>
             </dependency>
+<!--            metrics-->
+            <!-- https://mvnrepository.com/artifact/io.micrometer/micrometer-registry-prometheus -->
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-registry-prometheus</artifactId>
+                <version>1.9.4</version>
+            </dependency>
+
         </dependencies>
 
         <build>
