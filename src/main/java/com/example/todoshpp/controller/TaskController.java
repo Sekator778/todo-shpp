@@ -1,5 +1,6 @@
 package com.example.todoshpp.controller;
 
+import com.example.todoshpp.model.TaskDTO;
 import com.example.todoshpp.model.TaskEntity;
 import com.example.todoshpp.model.attribut.Status;
 import com.example.todoshpp.service.TaskService;
@@ -54,13 +55,14 @@ public class TaskController {
     @Operation(summary = "controller for create and save to repository task")
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> newTaskEntity(@Validated @RequestBody TaskEntity newTaskEntity) {
-        log.info("controller init method newTaskEntity with data -  {}", newTaskEntity);
-        return service.save(newTaskEntity);
+    public ResponseEntity<?> newTaskEntity(@Validated @RequestBody TaskDTO taskDTO) {
+        log.info("controller init method newTaskEntity with data -  {}", taskDTO);
+        return service.save(taskDTO);
     }
 
 
     // Save or update
+    @Operation(summary = "controller for save or update to repository task")
     @PutMapping("/{id}")
     TaskEntity saveOrUpdate(@RequestBody TaskEntity newTaskEntity, @PathVariable Integer id) {
         log.info("saveOrUpdate started");
@@ -68,6 +70,7 @@ public class TaskController {
     }
 
     // update status only
+    @Operation(summary = "controller for modify task")
     @PatchMapping("/{id}")
     public ResponseEntity<TaskEntity> patch(@Validated @RequestBody Status update, BindingResult result, @PathVariable Integer id) {
         log.info("patch started");
@@ -86,6 +89,7 @@ public class TaskController {
     }
 
     //    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "controller for delete task")
     @DeleteMapping("/{id}")
     void deleteTaskEntity(@PathVariable Integer id) {
         log.info("task with id - {} was delete", id);

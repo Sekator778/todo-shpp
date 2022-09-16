@@ -1,6 +1,7 @@
 package com.example.todoshpp.service;
 
 import com.example.todoshpp.controller.TaskController;
+import com.example.todoshpp.model.TaskDTO;
 import com.example.todoshpp.model.TaskEntity;
 import com.example.todoshpp.model.attribut.Status;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -54,7 +55,7 @@ class TaskServiceJPAIntegrationTest {
     @Test
     @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
     public void createRecord_success() throws Exception {
-        TaskEntity task1 = new TaskEntity(3, "desc3", Status.PLANNED);
+        TaskDTO task1 = new TaskDTO("desc3", "undone", Status.PLANNED);
         MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/api/tasks")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)

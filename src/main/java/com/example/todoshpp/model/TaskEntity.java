@@ -29,9 +29,6 @@ public class TaskEntity {
      * description current task
      */
     @Column(name = "description")
-    @NotNull
-    @NotBlank(message = "{description.text}")
-    @Size(min = 3, max = 60, message = "{desc-length.text}")
     private String description;
 
     /**

@@ -1,5 +1,6 @@
 package com.example.todoshpp.service;
 
+import com.example.todoshpp.model.TaskDTO;
 import com.example.todoshpp.model.TaskEntity;
 import com.example.todoshpp.model.attribut.Status;
 import com.example.todoshpp.model.attribut.StatusAttributeConverter;
@@ -47,8 +48,12 @@ public class TaskServiceJPA implements TaskService {
     }
 
     // Save
-    public ResponseEntity<TaskEntity> save(@Valid @RequestBody TaskEntity newTaskEntity) {
+    public ResponseEntity<TaskEntity> save(@Valid @RequestBody TaskDTO taskDTO) {
+        TaskEntity newTaskEntity = new TaskEntity();
         newTaskEntity.setModify(LocalDateTime.now());
+        newTaskEntity.setDescription(taskDTO.getDescription());
+        newTaskEntity.setDone(taskDTO.getDone());
+        newTaskEntity.setStatus(taskDTO.getStatus());
         TaskEntity save = repository.save(newTaskEntity);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
