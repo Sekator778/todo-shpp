@@ -1,12 +1,15 @@
 package com.example.todoshpp.config;
 
+import com.example.todoshpp.metrics.ToDoMetricInterceptor;
 import com.example.todoshpp.model.TaskEntity;
 import com.example.todoshpp.model.attribut.Status;
 import com.example.todoshpp.repository.TaskRepository;
+import io.micrometer.core.instrument.MeterRegistry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.handler.MappedInterceptor;
 
 @Configuration
 @Slf4j
@@ -28,5 +31,10 @@ public class DevelopmentConfig {
                 repository.save(taskTwo);
             }
         };
+    }
+
+    @Bean
+    public MappedInterceptor metricInterceptor(MeterRegistry registry) {
+        return new MappedInterceptor(new String[]{"/**"}, new ToDoMetricInterceptor(registry));
     }
 }

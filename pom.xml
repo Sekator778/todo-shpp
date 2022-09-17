@@ -109,6 +109,12 @@
                 <artifactId>micrometer-registry-prometheus</artifactId>
                 <version>1.9.4</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/io.micrometer/micrometer-registry-jmx -->
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-registry-jmx</artifactId>
+                <version>1.9.4</version>
+            </dependency>
 
         </dependencies>
 
