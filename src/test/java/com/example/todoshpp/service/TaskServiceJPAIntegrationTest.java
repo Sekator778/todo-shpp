@@ -1,4 +1,4 @@
-/* crash jenkins on aws
+// crash jenkins on aws
 package com.example.todoshpp.service;
 
 import com.example.todoshpp.controller.TaskController;
@@ -125,4 +125,3 @@ class TaskServiceJPAIntegrationTest {
                 .andExpect(status().isOk());
     }
 }
-*/

@@ -14,7 +14,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "5.1.3"
+      "version": "5.4.2"
     },
     {
       "type": "panel",
@@ -35,11 +35,25 @@
       "version": "5.0.0"
     }
   ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Dashboard for Spring Boot2.1 Statistics(based on Spring Boot2 Statistic by micrometer-prometheus).",
   "editable": true,
-  "gnetId": 6756,
+  "gnetId": 10280,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1530521539038,
+  "iteration": 1559343735958,
   "links": [],
   "panels": [
     {
@@ -360,14 +374,14 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "process_files_open{application=\"$application\", instance=\"$instance\"}",
+          "expr": "process_files_open_files{application=\"$application\", instance=\"$instance\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Open Files",
           "refId": "A"
         },
         {
-          "expr": "process_files_max{application=\"$application\", instance=\"$instance\"}",
+          "expr": "process_files_max_files{application=\"$application\", instance=\"$instance\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Max Files",
@@ -376,6 +390,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Process Open Files",
       "tooltip": {
@@ -556,6 +571,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "CPU Usage",
       "tooltip": {
@@ -648,6 +664,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Load Average",
       "tooltip": {
@@ -763,6 +780,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "$memory_pool_heap (heap)",
       "tooltip": {
@@ -810,8 +828,8 @@
       "fill": 1,
       "gridPos": {
         "h": 8,
-        "w": 12,
-        "x": 12,
+        "w": 8,
+        "x": 8,
         "y": 15
       },
       "id": 80,
@@ -838,7 +856,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "irate(jvm_classes_unloaded_total{instance=\"$instance\", application=\"$application\"}[5m])",
+          "expr": "irate(jvm_classes_unloaded_classes_total{instance=\"$instance\", application=\"$application\"}[5m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Classes Unloaded",
@@ -847,6 +865,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Classes Unloaded",
       "tooltip": {
@@ -949,6 +968,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "$memory_pool_nonheap (non-heap)",
       "tooltip": {
@@ -1040,6 +1060,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Mapped Buffers",
       "tooltip": {
@@ -1131,6 +1152,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Memory Allocate/Promote",
       "tooltip": {
@@ -1208,7 +1230,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "jvm_classes_loaded{instance=\"$instance\", application=\"$application\"}",
+          "expr": "jvm_classes_loaded_classes{instance=\"$instance\", application=\"$application\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Classes Loaded",
@@ -1217,6 +1239,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Classes Loaded",
       "tooltip": {
@@ -1309,6 +1332,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Direct Buffers",
       "tooltip": {
@@ -1385,21 +1409,21 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "jvm_threads_daemon{instance=\"$instance\", application=\"$application\"}",
+          "expr": "jvm_threads_daemon_threads{instance=\"$instance\", application=\"$application\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Daemon",
           "refId": "A"
         },
         {
-          "expr": "jvm_threads_live{instance=\"$instance\", application=\"$application\"}",
+          "expr": "jvm_threads_live_threads{instance=\"$instance\", application=\"$application\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Live",
           "refId": "B"
         },
         {
-          "expr": "jvm_threads_peak{instance=\"$instance\", application=\"$application\"}",
+          "expr": "jvm_threads_peak_threads{instance=\"$instance\", application=\"$application\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Peak",
@@ -1408,6 +1432,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Threads",
       "tooltip": {
@@ -1508,6 +1533,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "GC Count",
       "tooltip": {
@@ -1595,6 +1621,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "GC Stop the World Duration",
       "tooltip": {
@@ -1790,6 +1817,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Connections",
       "tooltip": {
@@ -1955,6 +1983,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Connection Creation Time",
       "tooltip": {
@@ -2039,6 +2068,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Connection Usage Time",
       "tooltip": {
@@ -2123,6 +2153,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Connection Acquire Time",
       "tooltip": {
@@ -2222,6 +2253,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Request Count",
       "tooltip": {
@@ -2309,6 +2341,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Response Time",
       "tooltip": {
@@ -2480,7 +2513,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "tomcat_sessions_active_current{instance=\"$instance\", application=\"$application\"}",
+          "expr": "tomcat_sessions_active_current_sessions{instance=\"$instance\", application=\"$application\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "active sessions",
@@ -2489,6 +2522,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Active Sessions",
       "tooltip": {
@@ -2583,6 +2617,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Sent & Recieved Bytes",
       "tooltip": {
@@ -2740,14 +2775,14 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "tomcat_threads_current{instance=\"$instance\", application=\"$application\"}",
+          "expr": "tomcat_threads_current_threads{instance=\"$instance\", application=\"$application\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Current thread",
           "refId": "A"
         },
         {
-          "expr": "tomcat_threads_busy{instance=\"$instance\", application=\"$application\"}",
+          "expr": "tomcat_threads_busy_threads{instance=\"$instance\", application=\"$application\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Current thread busy",
@@ -2756,6 +2791,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Threads",
       "tooltip": {
@@ -2856,6 +2892,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "INFO logs",
       "tooltip": {
@@ -2943,6 +2980,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "ERROR logs",
       "tooltip": {
@@ -3030,6 +3068,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "WARN logs",
       "tooltip": {
@@ -3117,6 +3156,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "DEBUG logs",
       "tooltip": {
@@ -3204,6 +3244,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "TRACE logs",
       "tooltip": {
@@ -3253,35 +3294,17 @@
         "allValue": null,
         "current": {},
         "datasource": "${DS_PROMETHEUS}",
-        "hide": 0,
-        "includeAll": false,
-        "label": "Instance",
-        "multi": false,
-        "name": "instance",
-        "options": [],
-        "query": "label_values(jvm_classes_loaded, instance)",
-        "refresh": 1,
-        "regex": "",
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "definition": "label_values(application)",
         "hide": 0,
         "includeAll": false,
         "label": "Application",
         "multi": false,
         "name": "application",
         "options": [],
-        "query": "label_values(jvm_classes_loaded{instance=\"$instance\"}, application)",
+        "query": "label_values(application)",
         "refresh": 1,
         "regex": "",
+        "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
@@ -3293,6 +3316,29 @@
         "allValue": null,
         "current": {},
         "datasource": "${DS_PROMETHEUS}",
+        "definition": "label_values(jvm_classes_loaded_classes{application=\"$application\"}, instance)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Instance",
+        "multi": false,
+        "name": "instance",
+        "options": [],
+        "query": "label_values(jvm_classes_loaded_classes{application=\"$application\"}, instance)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
+        "definition": "",
         "hide": 0,
         "includeAll": false,
         "label": "HikariCP-Pool",
@@ -3302,6 +3348,7 @@
         "query": "label_values(hikaricp_connections{instance=\"$instance\", application=\"$application\"}, pool)",
         "refresh": 1,
         "regex": "",
+        "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
@@ -3313,6 +3360,7 @@
         "allValue": null,
         "current": {},
         "datasource": "${DS_PROMETHEUS}",
+        "definition": "",
         "hide": 0,
         "includeAll": true,
         "label": "Memory Pool (heap)",
@@ -3322,6 +3370,7 @@
         "query": "label_values(jvm_memory_used_bytes{application=\"$application\", instance=\"$instance\", area=\"heap\"},id)",
         "refresh": 1,
         "regex": "",
+        "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
@@ -3333,6 +3382,7 @@
         "allValue": null,
         "current": {},
         "datasource": "${DS_PROMETHEUS}",
+        "definition": "",
         "hide": 0,
         "includeAll": true,
         "label": "Memory Pool (nonheap)",
@@ -3342,6 +3392,7 @@
         "query": "label_values(jvm_memory_used_bytes{application=\"$application\", instance=\"$instance\", area=\"nonheap\"},id)",
         "refresh": 1,
         "regex": "",
+        "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
@@ -3381,7 +3432,7 @@
     ]
   },
   "timezone": "",
-  "title": "Spring Boot Statistics",
-  "version": 15,
-  "description": "Dashboard for Spring Boot2 Statistics(by micrometer-prometheus)."
+  "title": "Spring Boot 2.1 Statistics",
+  "uid": "spring_boot_21",
+  "version": 3
 }
