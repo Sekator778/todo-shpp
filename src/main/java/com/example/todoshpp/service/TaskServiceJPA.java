@@ -8,6 +8,9 @@ import com.example.todoshpp.repository.TaskRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
@@ -41,13 +44,16 @@ public class TaskServiceJPA implements TaskService {
     }
 
     // Find by id
-
+    @Override
+    @Cacheable(cacheNames = "tasks", key = "#id")
     public Optional<TaskEntity> findOne(@PathVariable @Min(1) Integer id) {
         log.info("task findOne used");
         return repository.findById(id);
     }
 
     // Save
+    @Override
+    @CachePut(cacheNames = "tasks")
     public ResponseEntity<TaskEntity> save(@Valid @RequestBody TaskDTO taskDTO) {
         TaskEntity newTaskEntity = new TaskEntity();
         newTaskEntity.setModify(LocalDateTime.now());
@@ -108,7 +114,8 @@ public class TaskServiceJPA implements TaskService {
         log.info("patch used successful");
         return save;
     }
-
+    @Override
+    @CacheEvict(cacheNames = "tasks", key = "#id")
     public void deleteTaskEntity(@PathVariable Integer id) {
         log.info("task with id - {} was delete", id);
         repository.deleteById(id);

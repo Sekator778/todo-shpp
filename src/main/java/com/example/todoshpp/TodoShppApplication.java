@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.PropertySources;
 //        @PropertySource(value = "file:/app.properties", ignoreResourceNotFound = true)
 //})
 @RequiredArgsConstructor
+@EnableCaching
 public class TodoShppApplication {
     private static final Logger log = LoggerFactory.getLogger(TodoShppApplication.class);
 
