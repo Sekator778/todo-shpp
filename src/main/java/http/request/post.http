@@ -1,0 +1,12 @@
+## GET http://localhost:8080//api/tasks/2 --header "Authorization: Basic YWRtaW46YWRtaW4="
+
+// Basic authentication
+
+GET http://localhost:8080//api/tasks/2
+Authorization: Basic admin admin
+
+###
+
+// Digest authentication
+GET http://localhost:8080//api/tasks/2
+Authorization: Digest username password
